@@ -22,7 +22,7 @@ import org.springframework.security.oauth2.server.resource.web.access.BearerToke
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.nimbusds.jose.jwk.RSAKey;
-import com.guilherme.todo_app.model.users.UserDetailsServiceImpl;
+import com.guilherme.todo_app.model.user.UserDetailsServiceImpl;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -74,18 +74,6 @@ public class SecurityConfiguration {
         authenticationProvider.setUserDetailsService(userDetailsServiceImpl);
         return new ProviderManager(authenticationProvider);
     }
-
-    // @Bean
-    // public UserDetailsService userDetailsService() {
-    //     UserDetails user = User
-    //         .withUsername("gui")
-    //         .password("{noop}foxfox")
-    //         .authorities("read")
-    //         .roles("USER")
-    //         .build();
-        
-    //         return new InMemoryUserDetailsManager(user);
-    // }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

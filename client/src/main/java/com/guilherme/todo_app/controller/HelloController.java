@@ -1,4 +1,4 @@
-package com.guilherme.todo_app;
+package com.guilherme.todo_app.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

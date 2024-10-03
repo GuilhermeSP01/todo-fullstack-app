@@ -1,4 +1,4 @@
-package com.guilherme.todo_app.model.users;
+package com.guilherme.todo_app.model.user;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,4 +1,4 @@
-package com.guilherme.todo_app.model.users;
+package com.guilherme.todo_app.model.user;
 
 import java.util.Collection;
 import java.util.List;

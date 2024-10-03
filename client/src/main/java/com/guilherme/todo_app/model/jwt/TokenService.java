@@ -1,4 +1,4 @@
-package com.guilherme.todo_app.security.jwt;
+package com.guilherme.todo_app.model.jwt;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

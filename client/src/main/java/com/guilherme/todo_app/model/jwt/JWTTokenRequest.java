@@ -1,4 +1,4 @@
-package com.guilherme.todo_app.security.jwt;
+package com.guilherme.todo_app.model.jwt;
 
 public class JWTTokenRequest {
     
