@@ -35,17 +35,21 @@ public class TokenController {
         //     return ResponseEntity.of(user);
         // }
 
+        System.out.println("1");
         var authenticationToken =
             new UsernamePasswordAuthenticationToken(
                 jwtTokenRequest.getUsername(), 
                 jwtTokenRequest.getPassword());
 
+        System.out.println("2");
         var authentication =
             authenticationManager.authenticate(authenticationToken);
 
+        System.out.println("3");
         var token =
             TokenService.generateToken(authentication);
 
+        System.out.println("4");
         return ResponseEntity.ok(new JWTTokenResponse(token));
 
     }
