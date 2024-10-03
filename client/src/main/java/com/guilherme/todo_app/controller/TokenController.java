@@ -56,12 +56,10 @@ public class TokenController {
 
         if(userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-            //return new ResponseEntity<>("E-Mail já cadastrado.", HttpStatus.CONFLICT);
         }
         
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
-        System.out.println(user);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
