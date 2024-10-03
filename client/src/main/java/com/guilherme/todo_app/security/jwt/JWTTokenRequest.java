@@ -2,16 +2,16 @@ package com.guilherme.todo_app.security.jwt;
 
 public class JWTTokenRequest {
     
-    private String email;
+    private String name;
     private String username;
     private String password;
 
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {

@@ -11,7 +11,7 @@ public class User {
     
     @Id @GeneratedValue
     private Integer id;
-    private String email;
+    private String name;
     private String username;
     private String password;
 
@@ -23,12 +23,12 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {
@@ -49,7 +49,7 @@ public class User {
     
     @Override
     public String toString() {
-        return "User [id=" + id + ", email=" + email + ", username=" + username + ", password=" + password + "]";
+        return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + "]";
     }
 
 }

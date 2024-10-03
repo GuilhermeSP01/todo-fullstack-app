@@ -1,0 +1,2 @@
+-- insert into USERS (id, name, username, password)
+-- values (10, 'gui', 'gui@mail.com', 'foxfox');
