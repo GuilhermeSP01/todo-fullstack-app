@@ -49,5 +49,14 @@ public class TokenController {
         return ResponseEntity.ok(new JWTTokenResponse(token));
 
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+
+        userRepository.save(user);
+        System.out.println(user);
+
+        return null;
+    }
     
 }
