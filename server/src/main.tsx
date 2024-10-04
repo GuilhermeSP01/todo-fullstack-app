@@ -5,8 +5,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import HomePage from './routes/HomePage';
-import LoginPage from './routes/auth/LoginPage';
 import NotFoundPage from './routes/NotFoundPage';
+import LoginPage from './routes/auth/LoginPage';
 
 const router = createBrowserRouter([
   {
