@@ -24,6 +24,7 @@ public class TokenController {
     private final TokenService TokenService;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
+    
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
     
@@ -36,18 +37,24 @@ public class TokenController {
     @PostMapping("/login")
     public ResponseEntity<JWTTokenResponse> generateToken(@RequestBody JWTTokenRequest jwtTokenRequest) {
 
-        var authenticationToken =
+        try {
+
+            var authenticationToken =
             new UsernamePasswordAuthenticationToken(
                 jwtTokenRequest.getEmail(), 
                 jwtTokenRequest.getPassword());
 
-        var authentication =
-            authenticationManager.authenticate(authenticationToken);
+            var authentication =
+                authenticationManager.authenticate(authenticationToken);
 
-        var token =
-            TokenService.generateToken(authentication);
+            var token =
+                TokenService.generateToken(authentication);
 
-        return ResponseEntity.ok(new JWTTokenResponse(token));
+            return ResponseEntity.ok(new JWTTokenResponse(token));
+
+        } catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials", e);
+        }
 
     }
 
@@ -55,13 +62,13 @@ public class TokenController {
     public ResponseEntity<User> registerUser(@RequestBody User user) {
 
         if(userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already registered");
         }
         
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
     
 }
