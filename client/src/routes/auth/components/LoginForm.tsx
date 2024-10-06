@@ -1,5 +1,6 @@
 import { ErrorMessage, Formik, useField, Form } from "formik";
 import { FaGoogle, FaGithub } from 'react-icons/fa';
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,6 +25,8 @@ interface LoginFormProps {
 }
 
 export default function LoginForm({ formOptions }: LoginFormProps) {
+
+    const [isSubmitting, setSubmitting] = useState(false);
 
     return(
         <Formik initialValues={{ email: '', password: '' }} 
@@ -53,8 +56,8 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
                     </div>
 
                     <div className="mb-8 flex justify-center gap-8">
-                        <Button type="submit" className="w-2/5"> Entrar </Button>
-                        <Button type="button" variant="ghost" className="text-white w-2/5" onClick={ () => formOptions('register') }> Criar uma conta </Button>
+                        <Button type="submit" className="w-2/5" disabled={isSubmitting} onClick={ () => setSubmitting(true) }> Entrar </Button>
+                        <Button type="button" variant="ghost" className="text-white w-2/5" disabled={isSubmitting} onClick={ () => formOptions('register') }> Criar uma conta </Button>
                     </div>
                     
                     <hr className="mb-4 border-t border-slate-700" />
@@ -63,10 +66,10 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
                         <Label className="text-slate-400 text-base"> Ou entre usando </Label>
 
                         <div className="flex justify-center gap-8">
-                            <Button type="button" variant="secondary" className="w-4/5 gap-1 text-white text-base">
+                            <Button type="button" variant="secondary" disabled={isSubmitting} className="w-4/5 gap-1 text-white text-base">
                                 <FaGoogle className="mr-2" size={18} /> Google
                             </Button>
-                            <Button type="button" variant="secondary" className="w-4/5 text-white text-base">
+                            <Button type="button" variant="secondary" disabled={isSubmitting} className="w-4/5 text-white text-base">
                                 <FaGithub className="mr-2" size={18} /> GitHub
                             </Button>
                         </div>

@@ -1,5 +1,5 @@
 import { ErrorMessage, Formik, useField, Form } from "formik";
-import { FaGoogle, FaGithub } from 'react-icons/fa';
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,6 +24,8 @@ interface LoginFormProps {
 }
 
 export default function LoginForm({ formOptions }: LoginFormProps) {
+
+    const [isSubmitting, setSubmitting] = useState(false);
 
     return(
         <Formik initialValues={{ username: '', email: '', password: '', passwordConfirm: '' }} 
@@ -65,8 +67,8 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
 
 
                     <div className="mb-8 flex justify-center gap-8">
-                        <Button type="submit" className="w-2/5"> Cadastrar </Button>
-                        <Button type="button" variant="ghost" className="text-white w-2/5" onClick={ () => formOptions('login') }> Já sou cadastrado </Button>
+                        <Button type="submit" className="w-2/5" disabled={isSubmitting} onClick={ () => setSubmitting(true) }> Cadastrar </Button>
+                        <Button type="button" variant="ghost" className="text-white w-2/5" disabled={isSubmitting} onClick={ () => formOptions('login') }> Já sou cadastrado </Button>
                     </div>
             </Form>
 

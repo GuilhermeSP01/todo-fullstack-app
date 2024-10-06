@@ -34,11 +34,11 @@ public class TokenController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> generateToken(@RequestBody JWTTokenRequest jwtTokenRequest) {
+    public ResponseEntity<JWTTokenResponse> generateToken(@RequestBody JWTTokenRequest jwtTokenRequest) {
 
         var authenticationToken =
             new UsernamePasswordAuthenticationToken(
-                jwtTokenRequest.getUsername(), 
+                jwtTokenRequest.getEmail(), 
                 jwtTokenRequest.getPassword());
 
         var authentication =
@@ -52,16 +52,16 @@ public class TokenController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
 
-        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
+        if(userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok(user);
     }
     
 }

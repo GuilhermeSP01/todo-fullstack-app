@@ -1,7 +1,9 @@
 package com.guilherme.todo_app.model.user;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -9,17 +11,23 @@ import jakarta.persistence.Table;
 @Table(name = "USERS")
 public class User {
     
-    @Id @GeneratedValue
-    private Integer id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
     private String name;
-    private String username;
+
+    @Column(nullable = false)
+    private String email;
+    
+    @Column(nullable = false)
     private String password;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -31,12 +39,12 @@ public class User {
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -49,7 +57,7 @@ public class User {
     
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + "]";
+        return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
     }
 
 }
