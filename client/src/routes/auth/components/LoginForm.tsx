@@ -30,7 +30,8 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
         validationSchema={Yup.object({
             email: Yup.string()
                 .email('E-mail inválido')
-                .required('* Preencha este campo'),
+                .required('* Preencha este campo')
+                .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'E-mail inválido'),
             password: Yup.string()
                 .min(8, 'Deve conter no mínimo 8 caracteres')
                 .max(15, 'Deve conter no máximo 15 caracteres')

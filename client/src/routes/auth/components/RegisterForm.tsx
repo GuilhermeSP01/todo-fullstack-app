@@ -28,12 +28,22 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
     return(
         <Formik initialValues={{ email: '', password: '' }} 
         validationSchema={Yup.object({
+            username: Yup.string()
+                .required('* Preencha este campo')
+                .min(4, 'Deve conter no mínimo 4 caracteres')
+                .max(15, 'Deve conter no mínimo 15 caracteres')
+                .matches(/^[a-zA-Z0-9]+$/, 'Nome inválido'),
             email: Yup.string()
                 .email('E-mail inválido')
-                .required('* Preencha este campo'),
+                .required('* Preencha este campo')
+                .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'E-mail inválido'),
             password: Yup.string()
                 .min(8, 'Deve conter no mínimo 8 caracteres')
                 .max(15, 'Deve conter no máximo 15 caracteres')
+                .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Deve conter letra maiúscula, minúscula, número e caractere especial')
+                .required('* Preencha este campo'),
+            passwordConfirm: Yup.string()
+                .oneOf([Yup.ref('password')], 'As senhas devem ser iguais')
                 .required('* Preencha este campo')})} 
         onSubmit={(values, actions) => { 
             console.log({ values, actions }); 
@@ -47,13 +57,16 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
                     </div>
 
                     <div className="mb-6">
+                        <InputField label="Nome" name="username" type="text" placeholder="usuario" />
                         <InputField label="E-mail" name="email" type="text" placeholder="exemplo@mail.com" />
                         <InputField label="Senha" name="password" type="password" placeholder="********" />
+                        <InputField label="Confirme sua senha" name="passwordConfirm" type="password" placeholder="********" />
                     </div>
 
+
                     <div className="mb-8 flex justify-center gap-8">
-                        <Button type="submit" className="w-2/5"> Entrar </Button>
-                        <Button type="button" variant="secondary" className="text-white w-2/5" onClick={ () => formOptions('login') }> Cadastrar-se </Button>
+                        <Button type="submit" className="w-2/5"> Cadastrar </Button>
+                        <Button type="button" variant="secondary" className="text-white w-2/5" onClick={ () => formOptions('login') }> Login </Button>
                     </div>
                     
                     <hr className="mb-4 border-t border-slate-700" />
