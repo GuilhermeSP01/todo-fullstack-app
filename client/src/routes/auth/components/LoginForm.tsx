@@ -54,7 +54,7 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
 
                     <div className="mb-8 flex justify-center gap-8">
                         <Button type="submit" className="w-2/5"> Entrar </Button>
-                        <Button type="button" variant="secondary" className="text-white w-2/5" onClick={ () => formOptions('register') }> Cadastrar-se </Button>
+                        <Button type="button" variant="ghost" className="text-white w-2/5" onClick={ () => formOptions('register') }> Criar uma conta </Button>
                     </div>
                     
                     <hr className="mb-4 border-t border-slate-700" />
@@ -63,10 +63,10 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
                         <Label className="text-slate-400 text-base"> Ou entre usando </Label>
 
                         <div className="flex justify-center gap-8">
-                            <Button type="button" variant="outline" className="w-4/5 gap-1 text-white text-base">
+                            <Button type="button" variant="secondary" className="w-4/5 gap-1 text-white text-base">
                                 <FaGoogle className="mr-2" size={18} /> Google
                             </Button>
-                            <Button type="button" variant="outline" className="w-4/5 text-white text-base">
+                            <Button type="button" variant="secondary" className="w-4/5 text-white text-base">
                                 <FaGithub className="mr-2" size={18} /> GitHub
                             </Button>
                         </div>

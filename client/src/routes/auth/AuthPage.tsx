@@ -12,7 +12,7 @@ export default function AuthPage() {
 
     return(
         <main className="flex h-screen w-screen">
-            <div className="flex w-1/3 justify-center items-center bg-black">
+            <div className="flex w-1/3 justify-center items-center bg-[hsl(224,71.43%,4.12%)]">
                 {form === 'login' && <LoginForm formOptions={changeForm} />}
                 {form === 'register' && <RegisterForm formOptions={changeForm} />}
             </div>

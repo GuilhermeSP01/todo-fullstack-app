@@ -26,17 +26,17 @@ interface LoginFormProps {
 export default function LoginForm({ formOptions }: LoginFormProps) {
 
     return(
-        <Formik initialValues={{ email: '', password: '' }} 
+        <Formik initialValues={{ username: '', email: '', password: '', passwordConfirm: '' }} 
         validationSchema={Yup.object({
             username: Yup.string()
-                .required('* Preencha este campo')
                 .min(4, 'Deve conter no mínimo 4 caracteres')
                 .max(15, 'Deve conter no mínimo 15 caracteres')
-                .matches(/^[a-zA-Z0-9]+$/, 'Nome inválido'),
+                .matches(/^[a-zA-Z0-9._]+$/, 'Nome inválido')
+                .required('* Preencha este campo'),
             email: Yup.string()
                 .email('E-mail inválido')
-                .required('* Preencha este campo')
-                .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'E-mail inválido'),
+                .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'E-mail inválido')
+                .required('* Preencha este campo'),
             password: Yup.string()
                 .min(8, 'Deve conter no mínimo 8 caracteres')
                 .max(15, 'Deve conter no máximo 15 caracteres')
@@ -66,22 +66,7 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
 
                     <div className="mb-8 flex justify-center gap-8">
                         <Button type="submit" className="w-2/5"> Cadastrar </Button>
-                        <Button type="button" variant="secondary" className="text-white w-2/5" onClick={ () => formOptions('login') }> Login </Button>
-                    </div>
-                    
-                    <hr className="mb-4 border-t border-slate-700" />
-                    
-                    <div className="mb-4 flex flex-col gap-4 items-center">
-                        <Label className="text-slate-400 text-base"> Ou entre usando </Label>
-
-                        <div className="flex justify-center gap-8">
-                            <Button type="button" variant="outline" className="w-4/5 gap-1 text-white text-base">
-                                <FaGoogle className="mr-2" size={18} /> Google
-                            </Button>
-                            <Button type="button" variant="outline" className="w-4/5 text-white text-base">
-                                <FaGithub className="mr-2" size={18} /> GitHub
-                            </Button>
-                        </div>
+                        <Button type="button" variant="ghost" className="text-white w-2/5" onClick={ () => formOptions('login') }> Já sou cadastrado </Button>
                     </div>
             </Form>
 

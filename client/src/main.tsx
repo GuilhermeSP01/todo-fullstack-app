@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     element: <HomePage />,
     errorElement: <NotFoundPage />
   }, {
-    path: '/login',
+    path: '/auth',
     element: <AuthPage />
   }
 ]);
