@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client'
 import { ThemeProvider } from './ThemeProvider';
 import HomePage from './routes/HomePage';
 import NotFoundPage from './routes/NotFoundPage';
-import LoginPage from './routes/auth/LoginPage';
+import AuthPage from './routes/auth/AuthPage';
 
 const router = createBrowserRouter([
   {
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />
   }, {
     path: '/login',
-    element: <LoginPage />
+    element: <AuthPage />
   }
 ]);
 
