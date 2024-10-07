@@ -40,9 +40,9 @@ public class TokenController {
         try {
 
             var authenticationToken =
-            new UsernamePasswordAuthenticationToken(
-                jwtTokenRequest.getEmail(), 
-                jwtTokenRequest.getPassword());
+                new UsernamePasswordAuthenticationToken(
+                    jwtTokenRequest.getEmail(), 
+                    jwtTokenRequest.getPassword());
 
             var authentication =
                 authenticationManager.authenticate(authenticationToken);

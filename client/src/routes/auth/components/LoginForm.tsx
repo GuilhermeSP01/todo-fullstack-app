@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import * as Yup from 'yup';
+import { useAuth } from "@/components/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const InputField = ({ label, ...props }: 
     { label: string; name: string; [key: string]: any }) => {
@@ -28,6 +30,18 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
 
     const [isSubmitting, setSubmitting] = useState(false);
 
+    const navigate = useNavigate();
+    const authContext = useAuth();
+
+    async function login(email: string, password: string) {
+        
+        console.log(email, password);
+        
+        if(await authContext.login(email, password)) {
+            navigate('/');
+        }
+    }
+
     return(
         <Formik initialValues={{ email: '', password: '' }} 
         validationSchema={Yup.object({
@@ -36,12 +50,11 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
                 .required('* Preencha este campo')
                 .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'E-mail inválido'),
             password: Yup.string()
-                .min(8, 'Deve conter no mínimo 8 caracteres')
+                .min(6, 'Deve conter no mínimo 6 caracteres')
                 .max(15, 'Deve conter no máximo 15 caracteres')
                 .required('* Preencha este campo')})} 
-        onSubmit={(values, actions) => { 
-            console.log({ values, actions }); 
-            alert(JSON.stringify(values, null, 2)); 
+        onSubmit={({ email, password }, actions) => { 
+            login(email, password);
             actions.setSubmitting(false);}}>
                 
             <Form className="w-1/2">
@@ -56,7 +69,7 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
                     </div>
 
                     <div className="mb-8 flex justify-center gap-8">
-                        <Button type="submit" className="w-2/5" disabled={isSubmitting} onClick={ () => setSubmitting(true) }> Entrar </Button>
+                        <Button type="submit" className="w-2/5" disabled={isSubmitting}> Entrar </Button>
                         <Button type="button" variant="ghost" className="text-white w-2/5" disabled={isSubmitting} onClick={ () => formOptions('register') }> Criar uma conta </Button>
                     </div>
                     

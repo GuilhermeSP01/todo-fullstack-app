@@ -40,7 +40,7 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
                 .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'E-mail inválido')
                 .required('* Preencha este campo'),
             password: Yup.string()
-                .min(8, 'Deve conter no mínimo 8 caracteres')
+                .min(6, 'Deve conter no mínimo 6 caracteres')
                 .max(15, 'Deve conter no máximo 15 caracteres')
                 .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Deve conter letra maiúscula, minúscula, número e caractere especial')
                 .required('* Preencha este campo'),
