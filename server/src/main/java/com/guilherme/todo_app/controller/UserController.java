@@ -21,9 +21,9 @@ public class UserController {
         this.userRepository = userRepository;
     }
     
-    @RequestMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        Optional<User> user = userRepository.findById(id);
+    @RequestMapping("/{email}")
+    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email) {
+        Optional<User> user = userRepository.findByEmail(email);
         UserDTO userDTO = new UserDTO(user.get().getName(), user.get().getEmail());
         return user.isPresent() ? ResponseEntity.ok(userDTO) : ResponseEntity.notFound().build();
     }
