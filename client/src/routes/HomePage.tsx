@@ -1,11 +1,18 @@
+import { useAuth } from "@/components/context/AuthContext";
 import { Button } from "@/components/ui/button"
 
 export default function HomePage() {
 
+    const authContext = useAuth();
+
+    function handleClick() {
+        console.log(authContext.isAuthenticated, authContext.username, authContext.token);
+    }
+
     return(
         <div>
             <h1> Home Page </h1>
-            <Button> Login </Button>
+            <Button onClick={handleClick}> authContext </Button>
         </div>
     )
 }
