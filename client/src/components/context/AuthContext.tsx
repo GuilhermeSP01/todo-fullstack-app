@@ -29,9 +29,9 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         try {
 
             const response = await axios.post('http://localhost:8080/auth/login', { email: email, password: password })
+            const userDetails = await axios.get('http://localhost:8080/api/users/' + email, { headers: { Authorization: `Bearer ${response.data.token}` } });
 
-            if (response.status == 200) {
-                const userDetails = await axios.get('http://localhost:8080/api/users/' + email, { headers: { Authorization: `Bearer ${response.data.token}` } });
+            if (response.status == 200 && userDetails.status == 200) {
                 setIsAuthenticated(true);
                 setUsername(userDetails.data.username);
                 setToken(response.data.token);
