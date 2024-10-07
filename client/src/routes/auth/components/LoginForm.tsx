@@ -34,12 +34,15 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
     const authContext = useAuth();
 
     async function login(email: string, password: string) {
-        
-        console.log(email, password);
+
+        setSubmitting(true);
         
         if(await authContext.login(email, password)) {
             navigate('/');
         }
+
+        setSubmitting(false);
+
     }
 
     return(
@@ -53,9 +56,7 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
                 .min(6, 'Deve conter no mínimo 6 caracteres')
                 .max(15, 'Deve conter no máximo 15 caracteres')
                 .required('* Preencha este campo')})} 
-        onSubmit={({ email, password }, actions) => { 
-            login(email, password);
-            actions.setSubmitting(false);}}>
+        onSubmit={({ email, password }) => { login(email, password); }}>
                 
             <Form className="w-1/2">
                     <div className="mb-4">

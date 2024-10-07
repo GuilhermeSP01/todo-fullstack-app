@@ -1,28 +1,25 @@
 import './index.css'
 
-// import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ThemeProvider } from './ThemeProvider';
 
-// import HomePage from './routes/HomePage';
-// import NotFoundPage from './routes/NotFoundPage';
-// import AuthPage from './routes/auth/AuthPage';
-import AuthProvider, { useAuth } from './components/context/AuthContext';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './routes/HomePage';
+import NotFoundPage from './routes/NotFoundPage';
 import AuthPage from './routes/auth/AuthPage';
+import AuthProvider, { useAuth } from './components/context/AuthContext';
 
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <HomePage />,
-//     errorElement: <NotFoundPage />,
-//   }, {
-//     path: '/auth',
-//     element: <AuthPage />
-//   }
-// ]);
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <AuthenticatedRoute> <HomePage /> </AuthenticatedRoute>,
+    errorElement: <AuthenticatedRoute> <NotFoundPage /> </AuthenticatedRoute>,
+  }, {
+    path: '/auth',
+    element: <AuthPage />
+  }
+]);
 
 function AuthenticatedRoute( {children}: { children: React.ReactNode } ) {
   const { isAuthenticated } = useAuth();
@@ -38,20 +35,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        {/* <RouterProvider router={router} /> */}
-
-        <BrowserRouter>
-          <Routes>
-
-            <Route path="/auth" element={<AuthPage />} />
-            
-            <Route path="/" element={
-              <AuthenticatedRoute> <HomePage /> </AuthenticatedRoute>
-            } />
-            
-          </Routes>
-        </BrowserRouter>
-
+        <RouterProvider router={router} />
       </ThemeProvider>
     </AuthProvider>
   </StrictMode>,
