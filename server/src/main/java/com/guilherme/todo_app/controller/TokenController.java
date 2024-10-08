@@ -70,5 +70,5 @@ public class TokenController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
-    
+
 }

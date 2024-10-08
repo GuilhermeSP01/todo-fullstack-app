@@ -1,8 +1,24 @@
 import { useState } from "react";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthPage() {
+
+    const [validated, setValidated] = useState(false);
+    const navigate = useNavigate();
+
+    if(localStorage.getItem('token')) {
+        axios.get('http://localhost:8080/hello', { headers: { Authorization: `${localStorage.getItem('token')}` } })
+          .then( (response) => {
+            response.status == 200 ? setValidated(true) : setValidated(false);
+          } )
+    }
+
+    if(validated) {
+        navigate('/');
+    }
 
     const [form, setForm] = useState('login');
 

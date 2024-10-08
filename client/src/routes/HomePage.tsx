@@ -6,7 +6,8 @@ export default function HomePage() {
     const authContext = useAuth();
 
     function handleClick() {
-        console.log(authContext.isAuthenticated, authContext.username, authContext.token);
+        console.log(authContext.isAuthenticated, authContext.username, authContext.email, authContext.token);
+        console.log(localStorage.getItem('token'));
     }
 
     return(
