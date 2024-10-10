@@ -24,6 +24,7 @@ public class TokenController {
     private final TokenService TokenService;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
+    
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
     
@@ -34,34 +35,40 @@ public class TokenController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> generateToken(@RequestBody JWTTokenRequest jwtTokenRequest) {
+    public ResponseEntity<JWTTokenResponse> generateToken(@RequestBody JWTTokenRequest jwtTokenRequest) {
 
-        var authenticationToken =
-            new UsernamePasswordAuthenticationToken(
-                jwtTokenRequest.getUsername(), 
-                jwtTokenRequest.getPassword());
+        try {
 
-        var authentication =
-            authenticationManager.authenticate(authenticationToken);
+            var authenticationToken =
+                new UsernamePasswordAuthenticationToken(
+                    jwtTokenRequest.getEmail(), 
+                    jwtTokenRequest.getPassword());
 
-        var token =
-            TokenService.generateToken(authentication);
+            var authentication =
+                authenticationManager.authenticate(authenticationToken);
 
-        return ResponseEntity.ok(new JWTTokenResponse(token));
+            var token =
+                TokenService.generateToken(authentication);
+
+            return ResponseEntity.ok(new JWTTokenResponse(token));
+
+        } catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials", e);
+        }
 
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
 
-        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        if(userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already registered");
         }
         
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
-    
+
 }
