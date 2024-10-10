@@ -56,38 +56,38 @@ export default function LoginForm({ formOptions }: LoginFormProps) {
                 .min(6, 'Deve conter no mínimo 6 caracteres')
                 .max(15, 'Deve conter no máximo 15 caracteres')
                 .required('* Preencha este campo')})} 
-        onSubmit={({ email, password }) => { login(email, password); }}>
+        onSubmit={ ({ email, password }) => login(email, password) }>
                 
             <Form className="w-1/2">
-                    <div className="mb-4">
-                        <h1 className="text-white text-4xl font-semibold"> Login </h1>
-                        <Label className="text-slate-400 text-base"> Entre ou cadastre-se para continuar </Label>
-                    </div>
+                <div className="mb-4">
+                    <h1 className="text-white text-4xl font-semibold"> Login </h1>
+                    <Label className="text-slate-400 text-base"> Entre ou cadastre-se para continuar </Label>
+                </div>
 
-                    <div className="mb-6">
-                        <InputField label="E-mail" name="email" type="text" placeholder="exemplo@mail.com" />
-                        <InputField label="Senha" name="password" type="password" placeholder="********" />
-                    </div>
+                <div className="mb-6">
+                    <InputField label="E-mail" name="email" type="text" placeholder="exemplo@mail.com" />
+                    <InputField label="Senha" name="password" type="password" placeholder="********" />
+                </div>
 
-                    <div className="mb-8 flex justify-center gap-8">
-                        <Button type="submit" className="w-2/5" disabled={isSubmitting}> Entrar </Button>
-                        <Button type="button" variant="ghost" className="text-white w-2/5" disabled={isSubmitting} onClick={ () => formOptions('register') }> Criar uma conta </Button>
-                    </div>
-                    
-                    <hr className="mb-4 border-t border-slate-700" />
-                    
-                    <div className="mb-4 flex flex-col gap-4 items-center">
-                        <Label className="text-slate-400 text-base"> Ou entre usando </Label>
+                <div className="mb-8 flex justify-center gap-8">
+                    <Button type="submit" className="w-2/5" disabled={isSubmitting}> Entrar </Button>
+                    <Button type="button" variant="ghost" className="text-white w-2/5" disabled={isSubmitting} onClick={ () => formOptions('register') }> Criar uma conta </Button>
+                </div>
+                
+                <hr className="mb-4 border-t border-slate-700" />
+                
+                <div className="mb-4 flex flex-col gap-4 items-center">
+                    <Label className="text-slate-400 text-base"> Ou entre usando </Label>
 
-                        <div className="flex justify-center gap-8">
-                            <Button type="button" variant="secondary" disabled={isSubmitting} className="w-4/5 gap-1 text-white text-base">
-                                <FaGoogle className="mr-2" size={18} /> Google
-                            </Button>
-                            <Button type="button" variant="secondary" disabled={isSubmitting} className="w-4/5 text-white text-base">
-                                <FaGithub className="mr-2" size={18} /> GitHub
-                            </Button>
-                        </div>
+                    <div className="flex justify-center gap-8">
+                        <Button type="button" variant="secondary" disabled={isSubmitting} className="w-4/5 gap-1 text-white text-base">
+                            <FaGoogle className="mr-2" size={18} /> Google
+                        </Button>
+                        <Button type="button" variant="secondary" disabled={isSubmitting} className="w-4/5 text-white text-base">
+                            <FaGithub className="mr-2" size={18} /> GitHub
+                        </Button>
                     </div>
+                </div>
             </Form>
 
         </Formik>

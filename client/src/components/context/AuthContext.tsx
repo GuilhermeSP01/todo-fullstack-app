@@ -5,6 +5,7 @@ import { apiClient } from "./ApiClient";
 interface AuthContextValue {
     isAuthenticated: boolean;
     login: (email: string, password: string) => Promise<boolean>;
+    register: (username: string, email:string, password: string) => Promise<boolean>;
     logout: () => void;
     username: string | null;
     email: string | null;
@@ -14,6 +15,7 @@ interface AuthContextValue {
 export const AuthContext = createContext<AuthContextValue>({ 
     isAuthenticated: false, 
     login: async () => false, 
+    register: async () => false,
     logout: () => {}, 
     username: null, 
     email: null,
@@ -26,6 +28,17 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     const [username, setUsername] = useState(null);
     const [email, setEmail] = useState(null);
     const [token, setToken] = useState(null);
+
+    async function register(username: string, email:string, password: string) {
+
+        const response = await axios.post('http://localhost:8080/auth/register', { name: username, email: email, password: password })
+
+        if (response.status == 201) {
+            return login(email, password);
+        } else {
+            return false;
+        }
+    }
 
     async function login(email: string, password: string) {
 
@@ -72,7 +85,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout, username, email, token  }}>
+        <AuthContext.Provider value={{ isAuthenticated, login, register, logout, username, email, token  }}>
             {children}
         </AuthContext.Provider>
     );
