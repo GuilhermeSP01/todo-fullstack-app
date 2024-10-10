@@ -82,6 +82,9 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
         setUsername(null);
         setEmail(null);
         setToken(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('email');
     }
 
     return (
