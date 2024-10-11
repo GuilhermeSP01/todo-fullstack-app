@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -81,6 +82,30 @@ public class TodoController {
         todoRepository.save(todo);
 
         return ResponseEntity.ok(todo);
+    }
+
+    @PutMapping("/{todoId}")
+    public ResponseEntity<Todo> updateTodo(@PathVariable Long userId, @PathVariable Long todoId, @RequestBody Todo todoDetails) {
+
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Optional<Todo> todo = todoRepository.findById(todoId);
+        if(!todo.isPresent() || !todo.get().getUser().getId().equals(userId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Todo updatedTodo = todo.get();
+        updatedTodo.setTitle(todoDetails.getTitle());
+        updatedTodo.setDescription(todoDetails.getDescription());
+        updatedTodo.setTargetDate(todoDetails.getTargetDate());
+        updatedTodo.setDone(todoDetails.isDone());
+        
+        todoRepository.save(updatedTodo);
+
+        return ResponseEntity.ok(updatedTodo);
     }
 
     @DeleteMapping("/{todoId}")
