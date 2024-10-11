@@ -72,8 +72,20 @@ public class TodoController {
     }
 
     @DeleteMapping("/{todoId}")
-    public ResponseEntity<Todo> deleteTodo(@PathVariable Long userId, @PathVariable Long todoId) {
-        return null;
+    public ResponseEntity<Void> deleteTodo(@PathVariable Long userId, @PathVariable Long todoId) {
+
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Optional<Todo> todo = todoRepository.findById(todoId);
+        if(!todo.isPresent() || !todo.get().getUser().getId().equals(userId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        todoRepository.delete(todo.get());
+        return ResponseEntity.ok().build();
     }
 
 }
