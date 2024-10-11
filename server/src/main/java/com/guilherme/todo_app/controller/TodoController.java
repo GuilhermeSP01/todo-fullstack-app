@@ -57,6 +57,18 @@ public class TodoController {
         return ResponseEntity.ok(todo.get());
     }
 
+    @GetMapping("/completed/{completionStatus}")
+    public ResponseEntity<List<Todo>> retrieveAllTodosFromUserByCompletionStatus(@PathVariable Long userId, @PathVariable boolean completionStatus) {
+        
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<Todo> todos = todoRepository.findByUserAndDone(user.get(), completionStatus);
+        return ResponseEntity.ok(todos);
+    }
+
     @PostMapping
     public ResponseEntity<Todo> createTodo(@PathVariable Long userId, @RequestBody Todo todo) {
 
