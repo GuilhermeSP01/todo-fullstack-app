@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,8 +58,17 @@ public class TodoController {
     }
 
     @PostMapping
-    public ResponseEntity<Todo> createTodo(@PathVariable Long userId) {
-        return null;
+    public ResponseEntity<Todo> createTodo(@PathVariable Long userId, @RequestBody Todo todo) {
+
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        todo.setUser(user.get());
+        todoRepository.save(todo);
+
+        return ResponseEntity.ok(todo);
     }
 
     @DeleteMapping("/{todoId}")
