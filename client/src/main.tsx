@@ -1,5 +1,6 @@
 import './index.css'
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { StrictMode, useState } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -10,6 +11,9 @@ import NotFoundPage from './routes/NotFoundPage';
 import AuthPage from './routes/auth/AuthPage';
 import AuthProvider, { useAuth } from './components/context/AuthContext';
 import axios from 'axios';
+import TodosPage from './routes/todos/TodosPage'
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -19,6 +23,9 @@ const router = createBrowserRouter([
   }, {
     path: '/auth',
     element: <AuthPage />
+  }, {
+    path: '/todos',
+    element: <AuthenticatedRoute> <TodosPage /> </AuthenticatedRoute>
   }
 ]);
 
@@ -51,10 +58,12 @@ function AuthenticatedRoute( {children}: { children: React.ReactNode } ) {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AuthProvider>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>,
 )

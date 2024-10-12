@@ -8,6 +8,7 @@ interface AuthContextValue {
     register: (username: string, email:string, password: string) => Promise<boolean>;
     logout: () => void;
     username: string | null;
+    userId: string | null;
     email: string | null;
     token: string | null;
   }
@@ -17,7 +18,8 @@ export const AuthContext = createContext<AuthContextValue>({
     login: async () => false, 
     register: async () => false,
     logout: () => {}, 
-    username: null, 
+    username: null,
+    userId: null,
     email: null,
     token: null });
 export const useAuth = () => useContext(AuthContext);
@@ -26,6 +28,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [username, setUsername] = useState(null);
+    const [userId, setUserId] = useState(null);
     const [email, setEmail] = useState(null);
     const [token, setToken] = useState(null);
 
@@ -52,6 +55,8 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
                 setUsername(userDetails.data.username);
                 setEmail(userDetails.data.email);
                 setToken(response.data.token);
+                setUserId(userDetails.data.id);
+                localStorage.setItem('userId', userDetails.data.id)
                 localStorage.setItem('token', `Bearer ${response.data.token}`)
                 localStorage.setItem('username', userDetails.data.username)
                 localStorage.setItem('email', userDetails.data.email)
@@ -80,15 +85,17 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     function logout() {
         setIsAuthenticated(false);
         setUsername(null);
+        setUserId(null);
         setEmail(null);
         setToken(null);
         localStorage.removeItem('token');
         localStorage.removeItem('username');
+        localStorage.removeItem('userId');
         localStorage.removeItem('email');
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, register, logout, username, email, token  }}>
+        <AuthContext.Provider value={{ isAuthenticated, login, register, logout, username, userId, email, token  }}>
             {children}
         </AuthContext.Provider>
     );
