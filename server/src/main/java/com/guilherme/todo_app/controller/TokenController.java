@@ -59,7 +59,7 @@ public class TokenController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
+    public ResponseEntity<Void> registerUser(@RequestBody User user) {
 
         if(userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already registered");
@@ -68,7 +68,7 @@ public class TokenController {
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }

@@ -1,5 +1,6 @@
 import fetchTodos from "@/components/hooks/fetchTodos";
 import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface Todo {
     id: number
@@ -21,13 +22,27 @@ export default function TodosPage() {
         <main>
             <Button onClick={handleClick}> Todos </Button>
 
-            <ul>
-                {data?.map((data: Todo) => (
-                    <li key={data.id}>
-                        {data.title}, {data.description}, {data.targetDate}, {data.done.toString()}
-                    </li>
-                ))}
-            </ul>
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Title</TableHead>
+                        <TableHead>Description</TableHead>
+                        <TableHead>Target Date</TableHead>
+                        <TableHead>Done</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {data?.map((data: Todo) => (
+                        <TableRow key={data.id}>
+                            <TableCell>{data.title}</TableCell>
+                            <TableCell>{data.description}</TableCell>
+                            <TableCell>{data.targetDate}</TableCell>
+                            <TableCell>{data.done.toString()}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+
         </main>
     )
 }
