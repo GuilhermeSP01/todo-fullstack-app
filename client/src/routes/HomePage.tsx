@@ -27,6 +27,7 @@ export default function HomePage() {
             <Button onClick={printAuthContext}> authContext </Button> <br />
             <Button onClick={logout}> Logout </Button>
             <Button onClick={todos}> Todos </Button>
+
         </div>
     )
 }
