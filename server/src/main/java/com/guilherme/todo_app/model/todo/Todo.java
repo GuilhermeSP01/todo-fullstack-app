@@ -2,6 +2,7 @@ package com.guilherme.todo_app.model.todo;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.guilherme.todo_app.model.user.User;
 
 import jakarta.persistence.Column;
@@ -34,7 +35,8 @@ public class Todo {
     @Column(nullable = false)
     private boolean done;
 
-    @ManyToOne @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne @JsonIgnore
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public Long getId() {

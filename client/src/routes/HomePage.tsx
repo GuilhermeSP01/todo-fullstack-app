@@ -16,12 +16,18 @@ export default function HomePage() {
         authContext.logout();
         navigate('/auth');
     }
+
+    function todos() {
+        navigate('/todos');
+    }
     
     return(
         <div>
             <h1> Home Page </h1>
             <Button onClick={printAuthContext}> authContext </Button> <br />
             <Button onClick={logout}> Logout </Button>
+            <Button onClick={todos}> Todos </Button>
+
         </div>
     )
 }
